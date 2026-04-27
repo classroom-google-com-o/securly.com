@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latin to English Translator</title>
+    <style>
+        :root {
+            --primary: #4A148C;
+            --secondary: #7B1FA2;
+            --background: #f4f4f9;
+            --text: #333;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            padding: 30px;
+            width: 100%;
+            max-width: 800px;
+        }
+        h1 {
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 5px;
+        }
+        p.subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 25px;
+        }
+        .flex-row {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .io-box {
+            flex: 1;
+            min-width: 300px;
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: var(--primary);
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            resize: vertical;
+            box-sizing: border-box;
+        }
+        textarea:focus {
+            border-color: var(--secondary);
+            outline: none;
+        }
+        .output-box {
+            width: 100%;
+            height: 150px;
+            padding: 12px;
+            border: 2px solid #eee;
+            border-radius: 6px;
+            background-color: #fafafa;
+            font-size: 16px;
+            overflow-y: auto;
+            box-sizing: border-box;
+            line-height: 1.5;
+        }
+        .button-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: var(--secondary);
+        }
+        .translated {
+            color: var(--primary);
+            font-weight: 500;
+            border-bottom: 1px dashed var(--secondary);
+            cursor: help;
+        }
+        .unknown {
+            color: #d32f2f;
+        }
+        .legend {
+            margin-top: 15px;
+            font-size: 0.85em;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Latin to English Translator</h1>
+    <p class="subtitle">Based on the provided Cambridge Latin Course Dictionary</p>
+    
+    <div class="flex-row">
+        <div class="io-box">
+            <label for="latinInput">Latin Text:</label>
+            <textarea id="latinInput" placeholder="Enter Latin text here (e.g., amicus agricola ambulat)"></textarea>
+        </div>
+        
+        <div class="io-box">
+            <label>English Translation:</label>
+            <div id="englishOutput" class="output-box">Translation will appear here...</div>
+        </div>
+    </div>
+    
+    <div class="button-container">
+        <button onclick="translateText()">Translate</button>
+    </div>
+
+    <div class="legend">
+        <strong>Legend:</strong> 
+        <span class="translated">Purple text</span> = Translated (hover to see original Latin word). 
+        <span class="unknown">Red text</span> = Word not found in dictionary (due to unlisted conjugation/declension or missing entry).
+    </div>
+</div>
+
+<script>
+    // Dictionary extracted from the provided PDF document
+    const dictionary = {
+        "ab": "from, away from",
+        "abeo": "go away, depart",
+        "absum": "am out, absent, away",
+        "ac": "and",
+        "accido": "happen",
+        "accipio": "accept, take in, receive",
+        "actor": "actor",
+        "ad": "to, towards; at",
+        "adiuvo": "help",
+        "administro": "manage, administer",
+        "adoro": "worship",
+        "ambulo": "walk",
+        "amica": "friend (female)",
+        "amicus": "friend (male)",
+        "amita": "aunt",
+        "amitto": "lose",
+        "amo": "love, like",
+        "amor": "love",
+        "amphitheatrum": "amphitheater",
+        "amphora": "amphora, jar",
+        "ancilla": "slave (female)",
+        "angustus": "narrow",
+        "animal": "animal",
+        "annus": "year",
+        "annuus": "yearly, annual",
+        "anser": "goose",
+        "ante": "before; in front of",
+        "antea": "before",
+        "adsum": "am here, am present",
+        "advenio": "arrive",
+        "anulus": "ring",
+        "aedifico": "build",
+        "anxie": "anxiously",
+        "anxius": "worried",
+        "aeger": "sick, ill",
+        "aestus": "heat",
+        "aeternus": "everlasting, eternal",
+        "ager": "field",
+        "agito": "drive, drive on, chase",
+        "agnosco": "recognize",
+        "ago": "do; act",
+        "agricola": "farmer",
+        "albus": "white",
+        "aliquis": "someone",
+        "alius": "another, other",
+        "alter": "the other",
+        "altus": "high, deep",
+        "aqua": "water",
+        "aquaeductus": "aqueduct",
+        "arca": "crate",
+        "arcus": "arch",
+        "ardenter": "eagerly",
+        "ardeo": "burn",
+        "arma": "arms, weapons",
+        "artifex": "artist",
+        "ascendo": "climb",
+        "aper": "boar",
+        "aperio": "open",
+        "appareo": "appear",
+        "appropinquo": "approach",
+        "apud": "at the house of; with",
+        "ara": "altar",
+        "asinus": "fool; donkey",
+        "aspectus": "view",
+        "atrium": "reception room",
+        "attonitus": "shocked, astonished",
+        "audeo": "dare",
+        "audio": "hear, listen to",
+        "aufero": "steal, take away",
+        "augeo": "increase",
+        "auriga": "charioteer",
+        "auris": "ear",
+        "aurum": "gold",
+        "aut": "or",
+        "autumnus": "autumn",
+        "auxilium": "help",
+        "avis": "bird",
+        "balo": "bleat",
+        "barba": "beard",
+        "basilica": "hall",
+        "bellum": "war",
+        "bene": "well",
+        "benignus": "kind",
+        "bibo": "drink",
+        "blandus": "flattering",
+        "bonus": "good",
+        "bracchium": "arm",
+        "brevis": "short, brief",
+        "breviter": "briefly",
+        "cado": "fall",
+        "caedes": "killing",
+        "caelum": "sky",
+        "calcitro": "kick out",
+        "calidus": "hot",
+        "callidus": "clever",
+        "canis": "dog",
+        "canto": "sing",
+        "capio": "take, catch",
+        "caput": "head",
+        "carcer": "prison",
+        "carpo": "enjoy",
+        "carus": "expensive; dear",
+        "casa": "hut",
+        "casus": "accident",
+        "cautus": "careful",
+        "caveo": "beware",
+        "celebro": "celebrate",
+        "celeriter": "quickly",
+        "cella": "room",
+        "celo": "hide",
+        "cena": "dinner",
+        "centurio": "centurion",
+        "certe": "certainly",
+        "ceteri": "the rest",
+        "cibus": "food",
+        "cicatrix": "scar",
+        "civis": "citizen",
+        "clamo": "shout",
+        "clamor": "shout, noise",
+        "cogito": "think",
+        "cognosco": "find out, learn",
+        "cogo": "force, compel",
+        "columba": "dove",
+        "comes": "companion",
+        "conficio": "finish",
+        "consilium": "plan, advice",
+        "conspicio": "catch sight of",
+        "constituo": "decide",
+        "consul": "consul",
+        "consumo": "consume, eat",
+        "contra": "against",
+        "convenio": "gather, meet",
+        "copiae": "forces, troops",
+        "corpus": "body",
+        "cotidie": "every day",
+        "cras": "tomorrow",
+        "credo": "believe, trust",
+        "crudelis": "cruel",
+        "cubiculum": "bedroom",
+        "culina": "kitchen",
+        "cum": "with",
+        "cupio": "want, desire",
+        "cur": "why?",
+        "curro": "run",
+        "custodio": "guard",
+        "dea": "goddess",
+        "debeo": "owe; ought",
+        "defendo": "defend",
+        "deinde": "then",
+        "delecto": "delight",
+        "deleo": "destroy",
+        "deus": "god",
+        "dico": "say, speak",
+        "dies": "day",
+        "difficilis": "difficult",
+        "diligenter": "carefully",
+        "do": "give",
+        "doceo": "teach",
+        "dolor": "pain",
+        "domina": "mistress",
+        "dominus": "master",
+        "domus": "home",
+        "donum": "gift",
+        "dormio": "sleep",
+        "duco": "lead",
+        "dulcis": "sweet",
+        "duo": "two",
+        "dux": "leader",
+        "e": "from, out of",
+        "ex": "from, out of",
+        "ego": "I",
+        "emo": "buy",
+        "eo": "go",
+        "epistula": "letter",
+        "equus": "horse",
+        "et": "and",
+        "etiam": "even, also",
+        "exercitus": "army",
+        "exspecto": "wait for",
+        "fabula": "story",
+        "facio": "do; make",
+        "familia": "family",
+        "felix": "lucky",
+        "femina": "woman",
+        "fero": "bring, carry",
+        "fessus": "tired",
+        "festino": "hurry",
+        "fidelis": "loyal",
+        "filia": "daughter",
+        "filius": "son",
+        "flumen": "river",
+        "fortis": "brave",
+        "forum": "forum",
+        "frater": "brother",
+        
+        // Common grammatical forms to aid basic translation
+        "est": "is",
+        "sunt": "are",
+        "erat": "was",
+        "erant": "were",
+        "in": "in/on",
+        "non": "not",
+        "sed": "but",
+        "me": "me",
+        "te": "you"
+    };
+
+    function cleanWord(word) {
+        // Strip out punctuation so we can match the pure word
+        return word.replace(/[.,!?;:()]/g, '').toLowerCase().trim();
+    }
+
+    function translateText() {
+        const inputStr = document.getElementById("latinInput").value;
+        const outputDiv = document.getElementById("englishOutput");
+        
+        if (!inputStr.trim()) {
+            outputDiv.innerHTML = "<em>Please enter some text to translate.</em>";
+            return;
+        }
+
+        // Split text by spaces to evaluate words, but keep original formatting if possible
+        const lines = inputStr.split('\n');
+        const translatedLines = lines.map(line => {
+            const words = line.split(/\s+/);
+            const translatedWords = words.map(word => {
+                if (!word) return "";
+                const clean = cleanWord(word);
+                const translation = dictionary[clean];
+                
+                // Keep trailing punctuation to append after the span
+                const punctuationMatch = word.match(/[.,!?;:()]+$/);
+                const punctuation = punctuationMatch ? punctuationMatch[0] : "";
+                
+                if (translation) {
+                    return `<span class="translated" title="Latin: ${clean}">${translation}</span>${punctuation}`;
+                } else {
+                    return `<span class="unknown">${word}</span>`;
+                }
+            });
+            return translatedWords.join(" ");
+        });
+
+        outputDiv.innerHTML = translatedLines.join("<br>");
+    }
+</script>
+
+</body>
+</html>
