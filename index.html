@@ -34,7 +34,7 @@
 
         /* Featured Section for Outside Games */
         .featured-section {
-            margin-bottom: 50px;
+            margin-bottom: 30px;
             display: flex;
             justify-content: center;
         }
@@ -71,26 +71,33 @@
             font-style: italic;
         }
 
-        .header-actions {
-            margin-bottom: 50px;
+        /* Search Bar */
+        .search-container {
+            margin: 0 auto 30px auto;
+            max-width: 450px;
         }
 
-        .download-btn {
-            background-color: #4CAF50;
-            color: white;
-            padding: 14px 28px;
-            text-decoration: none;
-            font-size: 1.1rem;
-            font-weight: bold;
-            border-radius: 50px;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+        .search-input {
+            width: 100%;
+            padding: 14px 22px;
+            font-size: 1rem;
+            border-radius: 30px;
+            border: 2px solid #3f3f5a;
+            background-color: var(--card-bg);
+            color: var(--text-main);
+            outline: none;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+            text-align: center;
         }
 
-        .download-btn:hover {
-            background-color: #45a049;
-            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.5);
-            transform: translateY(-2px);
+        .search-input:focus {
+            border-color: var(--highlight);
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.3);
+        }
+
+        .search-input::placeholder {
+            color: var(--text-dim);
         }
 
         /* Improved Grid Layout */
@@ -133,6 +140,7 @@
             align-items: center;
             justify-content: center;
             padding: 10px;
+            text-align: center;
         }
 
         .game-card:hover a {
@@ -155,14 +163,160 @@
             <p>(Games will come in randomly)</p>
         </div>
     </div>
-    
-    <div class="game-grid">
+
+    <!-- Live Search Filter -->
+    <div class="search-container">
+        <input type="text" id="searchInput" class="search-input" onkeyup="filterGames()" placeholder="Search games...">
+    </div>
+
+    <div class="game-grid" id="gameGrid">
+        <!-- Original Links -->
         <div class="game-card"><a href="Shipgame.html">Ship Game</a></div>
         <div class="game-card"><a href="Mongoose.png">Securly Unblock Complete</a></div>
         <div class="game-card"><a href="Screensaver.html">Screensaver</a></div>
         <div class="game-card"><a href="HTMLeditor.html">Editor</a></div>
-        
+
+        <!-- Added Games -->
+        <div class="game-card"><a href="1-on-1-soccer.html">1 On 1 Soccer</a></div>
+        <div class="game-card"><a href="1-on-1-tennis.html">1 On 1 Tennis</a></div>
+        <div class="game-card"><a href="1.12.html">Minecraft 1.12</a></div>
+        <div class="game-card"><a href="1.5.html">Minecraft 1.5</a></div>
+        <div class="game-card"><a href="1.8.html">Minecraft 1.8</a></div>
+        <div class="game-card"><a href="10-minutes-till-dawn.html">10 Minutes Till Dawn</a></div>
+        <div class="game-card"><a href="12-mini-battles.html">12 Mini Battles</a></div>
+        <div class="game-card"><a href="1v1.lol.html">1v1.LOL</a></div>
+        <div class="game-card"><a href="2048-cupcakes.html">2048 Cupcakes</a></div>
+        <div class="game-card"><a href="2048.html">2048</a></div>
+        <div class="game-card"><a href="3D-flight-simulator.html">3D Flight Simulator</a></div>
+        <div class="game-card"><a href="8-ball-classic.html">8 Ball Classic</a></div>
+        <div class="game-card"><a href="agar-io-lite.html">Agar.io Lite</a></div>
+        <div class="game-card"><a href="age-of-war-2.html">Age Of War 2</a></div>
+        <div class="game-card"><a href="age-of-war.html">Age Of War</a></div>
+        <div class="game-card"><a href="ages-of-conflict.html">Ages Of Conflict</a></div>
+        <div class="game-card"><a href="Alpha_1.2.6.html">Minecraft Alpha 1.2.6</a></div>
+        <div class="game-card"><a href="among-us.html">Among Us</a></div>
+        <div class="game-card"><a href="angry-birds-showdown.html">Angry Birds Showdown</a></div>
+        <div class="game-card"><a href="angry-birds-space.html">Angry Birds Space</a></div>
+        <div class="game-card"><a href="angry-birds.html">Angry Birds</a></div>
+        <div class="game-card"><a href="awesome-tanks-2.html">Awesome Tanks 2</a></div>
+        <div class="game-card"><a href="awesome-tanks.html">Awesome Tanks</a></div>
+        <div class="game-card"><a href="backrooms.html">Backrooms</a></div>
+        <div class="game-card"><a href="bacon-may-die.html">Bacon May Die</a></div>
+        <div class="game-card"><a href="bad-ice-cream-2.html">Bad Ice Cream 2</a></div>
+        <div class="game-card"><a href="bad-ice-cream-3.html">Bad Ice Cream 3</a></div>
+        <div class="game-card"><a href="bad-ice-cream.html">Bad Ice Cream</a></div>
+        <div class="game-card"><a href="bad-parenting.html">Bad Parenting</a></div>
+        <div class="game-card"><a href="bad-piggies.html">Bad Piggies</a></div>
+        <div class="game-card"><a href="baldis-basics.html">Baldi's Basics</a></div>
+        <div class="game-card"><a href="baseball-bros.html">Baseball Bros</a></div>
+        <div class="game-card"><a href="basket-bros.html">Basket Bros</a></div>
+        <div class="game-card"><a href="basket-random.html">Basket Random</a></div>
+        <div class="game-card"><a href="basketball-legends.html">Basketball Legends</a></div>
+        <div class="game-card"><a href="basketball-stars.html">Basketball Stars</a></div>
+        <div class="game-card"><a href="Beta_1.3.html">Minecraft Beta 1.3</a></div>
+        <div class="game-card"><a href="bit-planes.htm">Bit Planes</a></div>
+        <div class="game-card"><a href="bitlife.html">Bitlife</a></div>
+        <div class="game-card"><a href="blocky-snakes.html">Blocky Snakes</a></div>
+        <div class="game-card"><a href="bloons-TD-2.html">Bloons TD 2</a></div>
+        <div class="game-card"><a href="bloons-TD-3.html">Bloons TD 3</a></div>
+        <div class="game-card"><a href="bloons-TD-4.html">Bloons TD 4</a></div>
+        <div class="game-card"><a href="bloons-TD-5.html">Bloons TD 5</a></div>
+        <div class="game-card"><a href="bloons-TD.html">Bloons TD</a></div>
+        <div class="game-card"><a href="bloxorz.html">Bloxorz</a></div>
+        <div class="game-card"><a href="blumgi-racers.html">Blumgi Racers</a></div>
+        <div class="game-card"><a href="blumgi-rocket.html">Blumgi Rocket</a></div>
+        <div class="game-card"><a href="bob-the-robber-2.html">Bob The Robber 2</a></div>
+        <div class="game-card"><a href="bob-the-robber-5.html">Bob The Robber 5</a></div>
+        <div class="game-card"><a href="bob-the-robber.html">Bob The Robber</a></div>
+        <div class="game-card"><a href="bouncy-motors.html">Bouncy Motors</a></div>
+        <div class="game-card"><a href="bow-masters.html">Bow Masters</a></div>
+        <div class="game-card"><a href="boxing-random.htm">Boxing Random</a></div>
+        <div class="game-card"><a href="breaking-the-bank.html">Breaking The Bank</a></div>
+        <div class="game-card"><a href="bubble-shooter.html">Bubble Shooter</a></div>
+        <div class="game-card"><a href="candy-crush.html">Candy Crush</a></div>
+        <div class="game-card"><a href="capybara-clicker.html">Capybara Clicker</a></div>
+        <div class="game-card"><a href="car-drawing.html">Car Drawing</a></div>
+        <div class="game-card"><a href="car-king-arena.html">Car King Arena</a></div>
+        <div class="game-card"><a href="chess.html">Chess</a></div>
+        <div class="game-card"><a href="choppy-orc.html">Choppy Orc</a></div>
+        <div class="game-card"><a href="circloO-2.html">circloO 2</a></div>
+        <div class="game-card"><a href="circloO.html">circloO</a></div>
+        <div class="game-card"><a href="clash-of-vikings.html">Clash Of Vikings</a></div>
+        <div class="game-card"><a href="cleanup-io.html">Cleanup.io</a></div>
+        <div class="game-card"><a href="cluster-rush.html">Cluster Rush</a></div>
+        <div class="game-card"><a href="cookie-clicker.htm">Cookie Clicker</a></div>
+        <div class="game-card"><a href="crazy-cars.html">Crazy Cars</a></div>
+        <div class="game-card"><a href="crazy-cattle-3D.html">Crazy Cattle 3D</a></div>
+        <div class="game-card"><a href="crazy-crash-landing.html">Crazy Crash Landing</a></div>
+        <div class="game-card"><a href="crazy-motorcycle.html">Crazy Motorcycle</a></div>
+        <div class="game-card"><a href="crossy-road.htm">Crossy Road</a></div>
+        <div class="game-card"><a href="cut-the-rope.html">Cut The Rope</a></div>
+        <div class="game-card"><a href="dadish-2.html">Dadish 2</a></div>
+        <div class="game-card"><a href="dadish-3.html">Dadish 3</a></div>
+        <div class="game-card"><a href="dadish.html">Dadish</a></div>
+        <div class="game-card"><a href="death-chase.html">Death Chase</a></div>
+        <div class="game-card"><a href="death-run-3D.html">Death Run 3D</a></div>
+        <div class="game-card"><a href="demolition-derby-crash-racing.html">Demolition Derby Crash Racing</a></div>
+        <div class="game-card"><a href="doodle-jump.html">Doodle Jump</a></div>
+        <div class="game-card"><a href="draw-climber.html">Draw Climber</a></div>
+        <div class="game-card"><a href="dreadhead-parkour.htm">Dreadhead Parkour</a></div>
+        <div class="game-card"><a href="drift-boss.htm">Drift Boss</a></div>
+        <div class="game-card"><a href="drive-mad.htm">Drive Mad</a></div>
+        <div class="game-card"><a href="duck-life-2.html">Duck Life 2</a></div>
+        <div class="game-card"><a href="duck-life-3.html">Duck Life 3</a></div>
+        <div class="game-card"><a href="duck-life-4.html">Duck Life 4</a></div>
+        <div class="game-card"><a href="duck-life-5.html">Duck Life 5</a></div>
+        <div class="game-card"><a href="duck-life.html">Duck Life</a></div>
+        <div class="game-card"><a href="ducklings-io.html">Ducklings.io</a></div>
+        <div class="game-card"><a href="eagle-ride.html">Eagle Ride</a></div>
+        <div class="game-card"><a href="earn-to-die-2.html">Earn To Die 2</a></div>
+        <div class="game-card"><a href="earn-to-die.html">Earn To Die</a></div>
+        <div class="game-card"><a href="eggy-car.html">Eggy Car</a></div>
+        <div class="game-card"><a href="elastic-face.htm">Elastic Face</a></div>
+        <div class="game-card"><a href="escape-road-2.html">Escape Road 2</a></div>
+        <div class="game-card"><a href="escape-road.html">Escape Road</a></div>
+        <div class="game-card"><a href="escaping-the-prison.html">Escaping The Prison</a></div>
+        <div class="game-card"><a href="evil-glitch.html">Evil Glitch</a></div>
+        <div class="game-card"><a href="fancy-pants-adventure-2.html">Fancy Pants Adventure 2</a></div>
+        <div class="game-card"><a href="fancy-pants-adventure.html">Fancy Pants Adventure</a></div>
+        <div class="game-card"><a href="fireboy-and-watergirl-2.html">Fireboy & Watergirl 2</a></div>
+        <div class="game-card"><a href="fireboy-and-watergirl-3.html">Fireboy & Watergirl 3</a></div>
+        <div class="game-card"><a href="fireboy-and-watergirl-4.html">Fireboy & Watergirl 4</a></div>
+        <div class="game-card"><a href="fireboy-and-watergirl.html">Fireboy & Watergirl</a></div>
+        <div class="game-card"><a href="flappy-bird.html">Flappy Bird</a></div>
+        <div class="game-card"><a href="flood-runner-2.html">Flood Runner 2</a></div>
+        <div class="game-card"><a href="flood-runner-3.html">Flood Runner 3</a></div>
+        <div class="game-card"><a href="flood-runner-4.html">Flood Runner 4</a></div>
+        <div class="game-card"><a href="fnaf-2.html">FNAF 2</a></div>
+        <div class="game-card"><a href="fnaf-3.html">FNAF 3</a></div>
+        <div class="game-card"><a href="fnaf-4.html">FNAF 4</a></div>
+        <div class="game-card"><a href="fnaf.html">FNAF</a></div>
+        <div class="game-card"><a href="football-bros.html">Football Bros</a></div>
+        <div class="game-card"><a href="football-legends.html">Football Legends</a></div>
+        <div class="game-card"><a href="free-rider-3.html">Free Rider 3</a></div>
+        <div class="game-card"><a href="fruit-ninja.html">Fruit Ninja</a></div>
+        <div class="game-card"><a href="funny-battle-2.html">Funny Battle 2</a></div>
+        <div class="game-card"><a href="funny-battle.html">Funny Battle</a></div>
+        <div class="game-card"><a href="funny-mad-racing.html">Funny Mad Racing</a></div>
+        <div class="game-card"><a href="funny-shooter-2.html">Funny Shooter 2</a></div>
     </div>
+
+    <!-- Filtering Script -->
+    <script>
+        function filterGames() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.game-card');
+            
+            cards.forEach(card => {
+                const title = card.textContent.toLowerCase();
+                if (title.includes(input)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
 
 </body>
 </html>
